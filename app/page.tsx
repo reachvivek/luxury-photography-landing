@@ -119,8 +119,8 @@ export default function Home() {
       </section>
 
       {/* Residential Spaces */}
-      <section className="pt-12 md:pt-16 pb-12 md:pb-16 px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto">
+      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
+        <div className="max-w-7xl mx-auto w-full py-16">
           <div className="flex items-center mb-16">
             <div className="flex-1 border-t border-stone-300"></div>
             <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
@@ -143,8 +143,8 @@ export default function Home() {
       </section>
 
       {/* Hotels & Hospitality */}
-      <section className="pt-4 md:pt-6 pb-12 md:pb-16 px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto">
+      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
+        <div className="max-w-7xl mx-auto w-full py-16">
           <div className="flex items-center mb-16">
             <div className="flex-1 border-t border-stone-300"></div>
             <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
@@ -167,8 +167,8 @@ export default function Home() {
       </section>
 
       {/* Commercial & Industry */}
-      <section className="pt-4 md:pt-6 pb-12 md:pb-16 px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto">
+      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
+        <div className="max-w-7xl mx-auto w-full py-16">
           <div className="flex items-center mb-16">
             <div className="flex-1 border-t border-stone-300"></div>
             <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
@@ -191,8 +191,8 @@ export default function Home() {
       </section>
 
       {/* Custom Interiors */}
-      <section className="pt-4 md:pt-6 pb-16 md:pb-20 px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto">
+      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
+        <div className="max-w-7xl mx-auto w-full py-16">
           <div className="flex items-center mb-16">
             <div className="flex-1 border-t border-stone-300"></div>
             <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
