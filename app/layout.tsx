@@ -49,6 +49,13 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: [
+      { url: "/images/1.png", sizes: "any" },
+      { url: "/images/1.png", type: "image/png" },
+    ],
+    apple: "/images/1.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
