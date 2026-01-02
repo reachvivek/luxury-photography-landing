@@ -73,6 +73,24 @@ export default function Home() {
     { title: "Design Details", image: "/images/8.png", href: "/custom-interiors#details" },
   ];
 
+  // Featured image state for each section
+  const [residentialIndex, setResidentialIndex] = useState(0);
+  const [hospitalityIndex, setHospitalityIndex] = useState(0);
+  const [commercialIndex, setCommercialIndex] = useState(0);
+  const [customIndex, setCustomIndex] = useState(0);
+
+  // Auto-rotate featured images
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setResidentialIndex((prev) => (prev + 1) % residentialSpaces.length);
+      setHospitalityIndex((prev) => (prev + 1) % hospitalitySpaces.length);
+      setCommercialIndex((prev) => (prev + 1) % commercialSpaces.length);
+      setCustomIndex((prev) => (prev + 1) % customInteriorsSpaces.length);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [residentialSpaces.length, hospitalitySpaces.length, commercialSpaces.length, customInteriorsSpaces.length]);
+
   return (
     <div className="min-h-screen bg-stone-50">
       <Navigation />
@@ -118,97 +136,290 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Residential Spaces */}
-      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto w-full py-16">
-          <div className="flex items-center mb-16">
+      {/* Portfolio Divider */}
+      <section className="py-24 px-6 md:px-16 bg-stone-50">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="flex items-center mb-8">
             <div className="flex-1 border-t border-stone-300"></div>
-            <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
-              Residential Spaces
+            <h2 className="px-8 text-5xl md:text-6xl lg:text-[64px] font-serif font-light text-stone-900">
+              Portfolio
             </h2>
             <div className="flex-1 border-t border-stone-300"></div>
           </div>
+          <p className="text-lg text-stone-600 max-w-2xl mx-auto">
+            Explore our curated collection of interior photography showcasing luxury spaces across different categories
+          </p>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {residentialSpaces.map((space) => (
-              <CategoryCard
+      {/* Residential Spaces */}
+      <section className="h-screen relative bg-[#F8F3F4]">
+        {/* Featured Image */}
+        <div className="relative h-[75vh]">
+          <Image
+            src={residentialSpaces[residentialIndex].image}
+            alt={residentialSpaces[residentialIndex].title}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+          {/* Title and Navigation */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 md:px-16 py-8 flex items-end justify-between">
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-serif font-light text-white">
+              Residential Spaces
+            </h2>
+
+            <div className="flex gap-4">
+              <button
+                onClick={() => setResidentialIndex((prev) => (prev - 1 + residentialSpaces.length) % residentialSpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Previous"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setResidentialIndex((prev) => (prev + 1) % residentialSpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Next"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Thumbnail Cards */}
+        <div className="h-[25vh] px-6 md:px-16 py-6 overflow-x-auto">
+          <div className="flex gap-4 h-full max-w-7xl mx-auto">
+            {residentialSpaces.map((space, index) => (
+              <Link
                 key={space.title}
-                title={space.title}
-                image={space.image}
                 href={space.href}
-              />
+                onClick={() => setResidentialIndex(index)}
+                className={`flex-shrink-0 w-48 group cursor-pointer transition-all duration-300 ${
+                  index === residentialIndex ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'
+                }`}
+              >
+                <div className="relative h-32 rounded-lg overflow-hidden mb-2">
+                  <Image
+                    src={space.image}
+                    alt={space.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <p className="text-sm font-serif text-stone-900 text-center">{space.title}</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* Hotels & Hospitality */}
-      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto w-full py-16">
-          <div className="flex items-center mb-16">
-            <div className="flex-1 border-t border-stone-300"></div>
-            <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
+      <section className="h-screen relative bg-[#F8F3F4]">
+        {/* Featured Image */}
+        <div className="relative h-[75vh]">
+          <Image
+            src={hospitalitySpaces[hospitalityIndex].image}
+            alt={hospitalitySpaces[hospitalityIndex].title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+          {/* Title and Navigation */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 md:px-16 py-8 flex items-end justify-between">
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-serif font-light text-white">
               Hotels & Hospitality
             </h2>
-            <div className="flex-1 border-t border-stone-300"></div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="flex gap-4">
+              <button
+                onClick={() => setHospitalityIndex((prev) => (prev - 1 + hospitalitySpaces.length) % hospitalitySpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Previous"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setHospitalityIndex((prev) => (prev + 1) % hospitalitySpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Next"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Thumbnail Cards */}
+        <div className="h-[25vh] px-6 md:px-16 py-6 overflow-x-auto">
+          <div className="flex gap-4 h-full max-w-7xl mx-auto">
             {hospitalitySpaces.map((space, index) => (
-              <CategoryCard
+              <Link
                 key={`${space.title}-${index}`}
-                title={space.title}
-                image={space.image}
                 href={space.href}
-              />
+                onClick={() => setHospitalityIndex(index)}
+                className={`flex-shrink-0 w-48 group cursor-pointer transition-all duration-300 ${
+                  index === hospitalityIndex ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'
+                }`}
+              >
+                <div className="relative h-32 rounded-lg overflow-hidden mb-2">
+                  <Image
+                    src={space.image}
+                    alt={space.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <p className="text-sm font-serif text-stone-900 text-center">{space.title}</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* Commercial & Industry */}
-      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto w-full py-16">
-          <div className="flex items-center mb-16">
-            <div className="flex-1 border-t border-stone-300"></div>
-            <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
+      <section className="h-screen relative bg-[#F8F3F4]">
+        {/* Featured Image */}
+        <div className="relative h-[75vh]">
+          <Image
+            src={commercialSpaces[commercialIndex].image}
+            alt={commercialSpaces[commercialIndex].title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+          {/* Title and Navigation */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 md:px-16 py-8 flex items-end justify-between">
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-serif font-light text-white">
               Commercial & Industry
             </h2>
-            <div className="flex-1 border-t border-stone-300"></div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {commercialSpaces.map((space) => (
-              <CategoryCard
+            <div className="flex gap-4">
+              <button
+                onClick={() => setCommercialIndex((prev) => (prev - 1 + commercialSpaces.length) % commercialSpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Previous"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setCommercialIndex((prev) => (prev + 1) % commercialSpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Next"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Thumbnail Cards */}
+        <div className="h-[25vh] px-6 md:px-16 py-6 overflow-x-auto">
+          <div className="flex gap-4 h-full max-w-7xl mx-auto">
+            {commercialSpaces.map((space, index) => (
+              <Link
                 key={space.title}
-                title={space.title}
-                image={space.image}
                 href={space.href}
-              />
+                onClick={() => setCommercialIndex(index)}
+                className={`flex-shrink-0 w-48 group cursor-pointer transition-all duration-300 ${
+                  index === commercialIndex ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'
+                }`}
+              >
+                <div className="relative h-32 rounded-lg overflow-hidden mb-2">
+                  <Image
+                    src={space.image}
+                    alt={space.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <p className="text-sm font-serif text-stone-900 text-center">{space.title}</p>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* Custom Interiors */}
-      <section className="min-h-screen flex items-center px-6 md:px-16 bg-[#F8F3F4]">
-        <div className="max-w-7xl mx-auto w-full py-16">
-          <div className="flex items-center mb-16">
-            <div className="flex-1 border-t border-stone-300"></div>
-            <h2 className="px-8 text-4xl md:text-5xl lg:text-[48px] font-serif font-normal text-stone-900 text-center whitespace-nowrap">
+      <section className="h-screen relative bg-[#F8F3F4]">
+        {/* Featured Image */}
+        <div className="relative h-[75vh]">
+          <Image
+            src={customInteriorsSpaces[customIndex].image}
+            alt={customInteriorsSpaces[customIndex].title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+          {/* Title and Navigation */}
+          <div className="absolute bottom-0 left-0 right-0 px-6 md:px-16 py-8 flex items-end justify-between">
+            <h2 className="text-4xl md:text-5xl lg:text-[56px] font-serif font-light text-white">
               Custom Interiors
             </h2>
-            <div className="flex-1 border-t border-stone-300"></div>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {customInteriorsSpaces.map((space) => (
-              <CategoryCard
+            <div className="flex gap-4">
+              <button
+                onClick={() => setCustomIndex((prev) => (prev - 1 + customInteriorsSpaces.length) % customInteriorsSpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Previous"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setCustomIndex((prev) => (prev + 1) % customInteriorsSpaces.length)}
+                className="w-12 h-12 rounded-full border-2 border-white/80 text-white hover:bg-white hover:text-stone-900 transition-all duration-200 flex items-center justify-center"
+                aria-label="Next"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Thumbnail Cards */}
+        <div className="h-[25vh] px-6 md:px-16 py-6 overflow-x-auto">
+          <div className="flex gap-4 h-full max-w-7xl mx-auto">
+            {customInteriorsSpaces.map((space, index) => (
+              <Link
                 key={space.title}
-                title={space.title}
-                image={space.image}
                 href={space.href}
-              />
+                onClick={() => setCustomIndex(index)}
+                className={`flex-shrink-0 w-48 group cursor-pointer transition-all duration-300 ${
+                  index === customIndex ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-100'
+                }`}
+              >
+                <div className="relative h-32 rounded-lg overflow-hidden mb-2">
+                  <Image
+                    src={space.image}
+                    alt={space.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <p className="text-sm font-serif text-stone-900 text-center">{space.title}</p>
+              </Link>
             ))}
           </div>
         </div>
